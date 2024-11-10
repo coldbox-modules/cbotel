@@ -35,7 +35,6 @@ component singleton {
 		];
 
 		return traceParent.toList( "-" );
-
 	}
 
 	/**
