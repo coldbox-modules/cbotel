@@ -42,10 +42,10 @@ component singleton {
 	public boolean function traceParentIsValid( string traceParent ){
 		var parts = listToArray( traceParent, "-" );
 		return parts.len() == 4
-			&& len( parts[ 1 ] ) == 2
-			&& len( parts[ 2 ] ) == 32
-			&& len( parts[ 3 ] ) == 16
-			&& !reFind( "[^0-9]", parts[ 4 ] );
+		&& len( parts[ 1 ] ) == 2
+		&& len( parts[ 2 ] ) == 32
+		&& len( parts[ 3 ] ) == 16
+		&& !reFind( "[^0-9]", parts[ 4 ] );
 	}
 
 	/**

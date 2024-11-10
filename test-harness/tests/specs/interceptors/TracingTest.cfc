@@ -54,19 +54,22 @@ component extends="coldbox.system.testing.BaseInterceptorTest" interceptor="cbot
 			} );
 
 			it( "will deconstruct and preserve open telemetry data if supplied", function(){
-				var testParentId   = "00-b48652ca043c66c38c2d1a320c9dfcd4-782eabf364406345-00";
+				var testParentId = "00-b48652ca043c66c38c2d1a320c9dfcd4-782eabf364406345-00";
 				expect( OpenTelemetryUtil.traceParentIsValid( testParentId ) ).toBeTrue();
 				var testTraceState = "foo=bar;baz=qux";
-				event.$( method="getHttpHeader", callback=function( name, defaultValue ){
-					switch( name ){
-						case "traceparent":
-							return testParentId;
-						case "tracestate":
-							return testTraceState;
-						default:
-							return defaultValue;
+				event.$(
+					method   = "getHttpHeader",
+					callback = function( name, defaultValue ){
+						switch ( name ) {
+							case "traceparent":
+								return testParentId;
+							case "tracestate":
+								return testTraceState;
+							default:
+								return defaultValue;
+						}
 					}
-				} );
+				);
 
 				interceptor.preProcess( event, rc, prc );
 				expect( prc ).toHaveKey( "openTelemetry" );
@@ -82,19 +85,22 @@ component extends="coldbox.system.testing.BaseInterceptorTest" interceptor="cbot
 			} );
 
 			it( "will append trace information to a hyper request", function(){
-				var testParentId   = "00-b48652ca043c66c38c2d1a320c9dfcd4-782eabf364406345-00";
+				var testParentId = "00-b48652ca043c66c38c2d1a320c9dfcd4-782eabf364406345-00";
 				expect( OpenTelemetryUtil.traceParentIsValid( testParentId ) ).toBeTrue();
 				var testTraceState = "foo=bar;baz=qux";
-				event.$( method="getHttpHeader", callback=function( name, defaultValue ){
-					switch( name ){
-						case "traceparent":
-							return testParentId;
-						case "tracestate":
-							return testTraceState;
-						default:
-							return defaultValue;
+				event.$(
+					method   = "getHttpHeader",
+					callback = function( name, defaultValue ){
+						switch ( name ) {
+							case "traceparent":
+								return testParentId;
+							case "tracestate":
+								return testTraceState;
+							default:
+								return defaultValue;
+						}
 					}
-				} );
+				);
 
 				interceptor.preProcess( event, rc, prc );
 				var testHyperRequest = createMock( "root.modules.hyper.models.HyperRequest" ).init();
@@ -109,27 +115,34 @@ component extends="coldbox.system.testing.BaseInterceptorTest" interceptor="cbot
 					.toHaveKey( "foo" )
 					.toHaveKey( "baz" );
 
-				interceptor.onHyperRequest( event, rc, prc, { "request" : testHyperRequest } );
+				interceptor.onHyperRequest(
+					event,
+					rc,
+					prc,
+					{ "request" : testHyperRequest }
+				);
 
 				expect( testHyperRequest.getHeader( "traceparent" ) ).toBe( testParentId );
 				expect( testHyperRequest.getHeader( "tracestate" ) ).toBe( testTraceState );
-
 			} );
 
 			it( "will append trace information to a Logstash entry", function(){
-				var testParentId   = "00-b48652ca043c66c38c2d1a320c9dfcd4-782eabf364406345-00";
+				var testParentId = "00-b48652ca043c66c38c2d1a320c9dfcd4-782eabf364406345-00";
 				expect( OpenTelemetryUtil.traceParentIsValid( testParentId ) ).toBeTrue();
 				var testTraceState = "foo=bar;baz=qux";
-				event.$( method="getHttpHeader", callback=function( name, defaultValue ){
-					switch( name ){
-						case "traceparent":
-							return testParentId;
-						case "tracestate":
-							return testTraceState;
-						default:
-							return defaultValue;
+				event.$(
+					method   = "getHttpHeader",
+					callback = function( name, defaultValue ){
+						switch ( name ) {
+							case "traceparent":
+								return testParentId;
+							case "tracestate":
+								return testTraceState;
+							default:
+								return defaultValue;
+						}
 					}
-				} );
+				);
 
 				interceptor.preProcess( event, rc, prc );
 				var testHyperRequest = createMock( "root.modules.hyper.models.HyperRequest" ).init();
@@ -148,12 +161,14 @@ component extends="coldbox.system.testing.BaseInterceptorTest" interceptor="cbot
 
 				interceptor.onLogstashEntryCreate( event, rc, prc, { "entry" : testEntry } );
 
-				expect( testEntry ).toHaveKey( "span.id" ).toHaveKey( "trace.id" ).toHaveKey( "transaction.id" );
+				expect( testEntry )
+					.toHaveKey( "span.id" )
+					.toHaveKey( "trace.id" )
+					.toHaveKey( "transaction.id" );
 
 				expect( testEntry[ "span.id" ] ).toBe( prc.openTelemetry.parentId );
 				expect( testEntry[ "trace.id" ] ).toBe( prc.openTelemetry.traceId );
 				expect( testEntry[ "transaction.id" ] ).toBe( prc.openTelemetry.transactionId );
-
 			} );
 		} );
 	}

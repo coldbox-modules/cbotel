@@ -7,8 +7,8 @@ component {
 	 * Processes the inbound open telemetry information and sets it in the private request context
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function preProcess( event, rc, prc ){
 		var traceParent   = event.getHttpHeader( "traceparent", "" );
@@ -41,19 +41,23 @@ component {
 			);
 
 			prc[ "openTelemetry" ] = {
-				"traceParent" : traceParent,
-				"parentId"    : listGetAt( traceParent, 3, "-" ),
-				"traceId"     : listGetAt( traceParent, 2, "-" ),
-				"traceState"  : traceStateObj,
-				"transactionId" : OpenTelemetryUtil.createSpanId( seed & serializeJSON(  getHTTPRequestData( false ) ) )
+				"traceParent"   : traceParent,
+				"parentId"      : listGetAt( traceParent, 3, "-" ),
+				"traceId"       : listGetAt( traceParent, 2, "-" ),
+				"traceState"    : traceStateObj,
+				"transactionId" : OpenTelemetryUtil.createSpanId(
+					seed & serializeJSON( getHTTPRequestData( false ) )
+				)
 			};
 		} else if ( len( traceParent ) ) {
 			prc[ "openTelemetry" ] = {
-				"traceParent" : traceParent,
-				"parentId"    : listGetAt( traceParent, 3, "-" ),
-				"traceId"     : listGetAt( traceParent, 2, "-" ),
-				"traceState"  : traceStateObj,
-				"transactionId" : OpenTelemetryUtil.createSpanId( OpenTelemetryUtil.newUUID() & serializeJSON(  getHTTPRequestData( false ) ) )
+				"traceParent"   : traceParent,
+				"parentId"      : listGetAt( traceParent, 3, "-" ),
+				"traceId"       : listGetAt( traceParent, 2, "-" ),
+				"traceState"    : traceStateObj,
+				"transactionId" : OpenTelemetryUtil.createSpanId(
+					OpenTelemetryUtil.newUUID() & serializeJSON( getHTTPRequestData( false ) )
+				)
 			};
 		}
 
@@ -67,15 +71,15 @@ component {
 	 * Adds the traceparent and tracestate headers to the response
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function postProcess( event, rc, prc ){
 		if ( structKeyExists( prc, "openTelemetry" ) && structKeyExists( prc.openTelemetry, "traceParent" ) ) {
 			event.setHttpHeader( name = "traceparent", value = prc.openTelemetry.traceParent );
 			event.setHttpHeader( name = "X-B3-SpanId", value = prc.openTelemetry.transactionId );
 			announce( "onTraceStateFinalized", { "traceState" : prc.openTelemetry.traceState } );
-			if( !structIsEmpty( prc.openTelemetry.traceState ) ){
+			if ( !structIsEmpty( prc.openTelemetry.traceState ) ) {
 				event.setHttpHeader(
 					name  = "tracestate",
 					value = prc.openTelemetry.traceState
@@ -86,7 +90,6 @@ component {
 						.toList( ";" )
 				);
 			}
-
 		}
 	}
 
@@ -117,9 +120,9 @@ component {
 	/**
 	 * Appends the trace information to logstash entries
 	 *
-	 * @event
-	 * @rc
-	 * @prc
+	 * @event        
+	 * @rc           
+	 * @prc          
 	 * @interceptData
 	 */
 	function onLogstashEntryCreate( event, rc, prc, interceptData ){

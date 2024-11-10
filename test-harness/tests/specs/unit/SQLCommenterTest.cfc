@@ -3,10 +3,7 @@
  * and then create it, prepare it for mocking and then place it in the variables scope as 'model'. It is your
  * responsibility to update the model annotation instantiation path and init your model.
  */
-component
-	extends="coldbox.system.testing.BaseModelTest"
-	model="cbotel.models.SQLCommenter"
-{
+component extends="coldbox.system.testing.BaseModelTest" model="cbotel.models.SQLCommenter" {
 
 	/*********************************** LIFE CYCLE Methods ***********************************/
 
@@ -24,16 +21,11 @@ component
 	/*********************************** BDD SUITES ***********************************/
 
 	function run(){
-
 		describe( "otel.models.SQLCommenter Suite", function(){
-
 			it( "can be created", function(){
 				expect( model ).toBeComponent();
 			} );
-
-
-		});
-
+		} );
 	}
 
 }
