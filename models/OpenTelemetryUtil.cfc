@@ -26,12 +26,16 @@ component singleton {
 		var traceId          = len( traceId ) ? traceId : createTraceId( arguments.seed );
 		var parentId         = len( parentId ) ? parentId : createSpanId( arguments.seed );
 		var traceFlags       = getTraceFlags( arguments.isSampled );
-		return [
+
+		var traceParent = [
 			variables.traceVersion,
 			traceId,
 			parentID,
 			traceFlags
-		].toList( "-" );
+		];
+
+		return traceParent.toList( "-" );
+
 	}
 
 	/**
