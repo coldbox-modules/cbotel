@@ -36,7 +36,7 @@ component {
 			traceParent = OpenTelemetryUtil.newTraceparent(
 				seed      = transactionId,
 				isSampled = !!isSampled,
-				parentId  = len( parentId ) ? parentId : spanId,
+				parentId  = len( parentId ) ? parentId : ( len( spanId ) ? spanId : transactionId ),
 				traceId   = traceId
 			);
 

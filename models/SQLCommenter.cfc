@@ -17,9 +17,10 @@ component singleton accessors="true" {
 		var comments = {};
 		if ( moduleSettings.SQLCommentsEnabled ) {
 			var event       = requestService.getContext();
-			var traceParent = event.getHttpHeader( "traceparent", "" );
-			if ( len( traceParent ) ) {
-				comments[ "traceparent" ] = traceParent;
+			var prc = event.getPrivateCollection();
+			if( prc.keyExists( "openTelemetry" ) ){
+				comments[ "transactionId" ] = prc.openTelemetry.transactionId;
+				comments[ "traceparent" ] = prc.openTelemetry.traceParent;
 			}
 		}
 		return comments;
