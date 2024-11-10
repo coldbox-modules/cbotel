@@ -1,29 +1,26 @@
 {
-    "name":"Coldbox Open Telementry Module",
-    "version":"1.1.0",
-    "location":"https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/cbotel/@build.version@/cbotel-@build.version@.zip",
-    "author":"Ortus Solutions <info@ortussolutions.com>",
-    "homepage":"https://github.com/coldbox-modules/cbotel",
-    "documentation":"https://github.com/coldbox-modules/cbotel",
-    "repository":{
-        "type":"git",
-        "url":"https://github.com/coldbox-modules/cbotel"
-    },
-    "bugs":"https://github.com/coldbox-modules/cbotel",
-    "shortDescription":"Description goes here",
-    "slug":"cbotel",
-    "type":"modules",
-    "keywords":"",
-    "license":[
-        {
-            "type":"Apache2",
-            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
-        }
-    ],
-    "contributors":[],
-    "dependencies":{},
-    "devDependencies":{
-        "commandbox-cfformat":"*",
+	"name" 		: "Coldbox Open Telementry Module",
+	"version"   : "1.0.0",
+    "location"  : "https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/cbotel/@build.version@/cbotel-@build.version@.zip",
+	"author" 	: "Ortus Solutions <info@ortussolutions.com>",
+	"homepage"	: "https://github.com/coldbox-modules/cbotel",
+	"documentation"		: "https://github.com/coldbox-modules/cbotel",
+	"repository"		: { "type" : "git", "url" : "https://github.com/coldbox-modules/cbotel" },
+	"bugs" : "https://github.com/coldbox-modules/cbotel",
+	"shortDescription"	: "Open Telemetry and distributed tracing Module for the Coldbox Platform",
+	"slug"		: "cbotel",
+	"type"		: "modules",
+	"keywords":"open telemetry, tracing, distributed tracing, coldbox, coldfusion, lucee, adobe",
+	"license"			: [
+		{ "type" : "Apache2", "url" : "http://www.apache.org/licenses/LICENSE-2.0.html" }
+	],
+	"contributors"		: [
+		"Jon Clausen <jclausen@ortussolutions.com>"
+	],
+	"dependencies" 	:{
+	},
+	"devDependencies" 	:{
+		"commandbox-cfformat":"*",
         "commandbox-docbox":"*",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*"
