@@ -16,7 +16,7 @@ component extends="coldbox.system.testing.BaseTestCase" {
 		// interceptor configuration properties, if any
 		configProperties      = {};
 		// init and configure interceptor
-		variables.interceptor = createMock( new cbotel.interceptors.Tracing() );
+		variables.interceptor = prepareMock( new cbotel.interceptors.Tracing() );
 		// we are now ready to test this interceptor
 		getWirebox().autoWire( interceptor );
 
