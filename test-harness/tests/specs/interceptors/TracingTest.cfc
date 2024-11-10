@@ -14,7 +14,7 @@ component extends="coldbox.system.testing.BaseTestCase" {
 		super.beforeAll();
 
 		// interceptor configuration properties, if any
-		configProperties = {};
+		configProperties      = {};
 		// init and configure interceptor
 		variables.interceptor = new cbotel.interceptors.Tracing();
 		// we are now ready to test this interceptor
