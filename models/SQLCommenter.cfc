@@ -16,11 +16,11 @@ component singleton accessors="true" {
 	public struct function getComments( required string sql, string datasource ){
 		var comments = {};
 		if ( moduleSettings.SQLCommentsEnabled ) {
-			var event       = requestService.getContext();
-			var prc = event.getPrivateCollection();
-			if( prc.keyExists( "openTelemetry" ) ){
+			var event = requestService.getContext();
+			var prc   = event.getPrivateCollection();
+			if ( prc.keyExists( "openTelemetry" ) ) {
 				comments[ "transactionId" ] = prc.openTelemetry.transactionId;
-				comments[ "traceparent" ] = prc.openTelemetry.traceParent;
+				comments[ "traceparent" ]   = prc.openTelemetry.traceParent;
 			}
 		}
 		return comments;
