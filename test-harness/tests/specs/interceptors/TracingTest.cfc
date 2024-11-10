@@ -34,9 +34,9 @@ component extends="coldbox.system.testing.BaseInterceptorTest" interceptor="cbot
 
 	function run(){
 		describe( "otel.interceptors.Tracing", function(){
-			var event;
-			var rc;
-			var prc;
+			var event = javacast( "null", 0 );
+			var rc = javacast( "null", 0 );
+			var prc = javacast( "null", 0 );
 
 			beforeEach( function(){
 				event = getMockRequestContext();

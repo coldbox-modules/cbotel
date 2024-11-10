@@ -7,8 +7,8 @@ component {
 	 * Processes the inbound open telemetry information and sets it in the private request context
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function preProcess( event, rc, prc ){
 		var traceParent   = event.getHttpHeader( "traceparent", "" );
@@ -25,16 +25,16 @@ component {
 			traceParent = "";
 		}
 
+		var transactionId = OpenTelemetryUtil.newUUID() & serializeJSON( getHTTPRequestData( false ) );
+
 		if ( !len( traceParent ) && moduleSettings.autoAddTraceParent ) {
 			var isSampled = event.getHttpHeader( "X-B3-Sampled", "0" );
 			var parentId  = event.getHttpHeader( "X-B3-ParentSpanId", "" );
 			var traceId   = event.getHttpHeader( "X-B3-TraceId", "" );
 			var spanId    = event.getHttpHeader( "X-B3-SpanId", "" );
 
-			var seed = OpenTelemetryUtil.newUUID();
-
 			traceParent = OpenTelemetryUtil.newTraceparent(
-				seed      = seed,
+				seed      = transactionId,
 				isSampled = !!isSampled,
 				parentId  = len( parentId ) ? parentId : spanId,
 				traceId   = traceId
@@ -45,9 +45,7 @@ component {
 				"parentId"      : listGetAt( traceParent, 3, "-" ),
 				"traceId"       : listGetAt( traceParent, 2, "-" ),
 				"traceState"    : traceStateObj,
-				"transactionId" : OpenTelemetryUtil.createSpanId(
-					seed & serializeJSON( getHTTPRequestData( false ) )
-				)
+				"transactionId" : transactionId
 			};
 		} else if ( len( traceParent ) ) {
 			prc[ "openTelemetry" ] = {
@@ -55,9 +53,7 @@ component {
 				"parentId"      : listGetAt( traceParent, 3, "-" ),
 				"traceId"       : listGetAt( traceParent, 2, "-" ),
 				"traceState"    : traceStateObj,
-				"transactionId" : OpenTelemetryUtil.createSpanId(
-					OpenTelemetryUtil.newUUID() & serializeJSON( getHTTPRequestData( false ) )
-				)
+				"transactionId" : transactionId
 			};
 		}
 
@@ -71,8 +67,8 @@ component {
 	 * Adds the traceparent and tracestate headers to the response
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function postProcess( event, rc, prc ){
 		if ( structKeyExists( prc, "openTelemetry" ) && structKeyExists( prc.openTelemetry, "traceParent" ) ) {
@@ -120,9 +116,9 @@ component {
 	/**
 	 * Appends the trace information to logstash entries
 	 *
-	 * @event        
-	 * @rc           
-	 * @prc          
+	 * @event
+	 * @rc
+	 * @prc
 	 * @interceptData
 	 */
 	function onLogstashEntryCreate( event, rc, prc, interceptData ){
