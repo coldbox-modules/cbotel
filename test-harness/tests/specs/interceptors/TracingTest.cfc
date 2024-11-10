@@ -3,7 +3,7 @@
  * and then create it, prepare it for mocking, and then place it in the variables scope as 'interceptor'. It is your
  * responsibility to update the interceptor annotation instantiation path.
  */
-component extends="coldbox.system.testing.BaseInterceptorTest" interceptor="cbotel.interceptors.Tracing" {
+component extends="coldbox.system.testing.BaseTestCase" {
 
 	this.loadColbox    = true;
 	this.unloadColdbox = false;
@@ -16,7 +16,7 @@ component extends="coldbox.system.testing.BaseInterceptorTest" interceptor="cbot
 		// interceptor configuration properties, if any
 		configProperties = {};
 		// init and configure interceptor
-		super.setup();
+		variables.interceptor = new cbotel.interceptors.Tracing();
 		// we are now ready to test this interceptor
 		getWirebox().autoWire( interceptor );
 

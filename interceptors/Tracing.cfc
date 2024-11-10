@@ -7,8 +7,8 @@ component {
 	 * Processes the inbound open telemetry information and sets it in the private request context
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function preProcess( event, rc, prc ){
 		var traceParent   = event.getHttpHeader( "traceparent", "" );
@@ -67,8 +67,8 @@ component {
 	 * Adds the traceparent and tracestate headers to the response
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function postProcess( event, rc, prc ){
 		if ( structKeyExists( prc, "openTelemetry" ) && structKeyExists( prc.openTelemetry, "traceParent" ) ) {
@@ -99,7 +99,7 @@ component {
 			if ( len( otel.traceParent ) && !len( hyperRequest.getHeader( "traceparent" ) ) ) {
 				hyperRequest.setHeader( "traceparent", otel.traceParent );
 			}
-			if ( len( otel.traceState ) && !len( hyperRequest.getHeader( "tracestate" ) ) ) {
+			if ( !structIsEmpty( otel.traceState ) && !len( hyperRequest.getHeader( "tracestate" ) ) ) {
 				hyperRequest.setHeader(
 					"tracestate",
 					otel.traceState
@@ -116,9 +116,9 @@ component {
 	/**
 	 * Appends the trace information to logstash entries
 	 *
-	 * @event        
-	 * @rc           
-	 * @prc          
+	 * @event
+	 * @rc
+	 * @prc
 	 * @interceptData
 	 */
 	function onLogstashEntryCreate( event, rc, prc, interceptData ){
