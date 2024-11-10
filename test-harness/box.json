@@ -1,0 +1,24 @@
+{
+    "name":"Tester",
+    "version":"0.0.0",
+    "slug":"tester",
+    "private":true,
+    "description":"",
+    "dependencies":{
+        "coldbox":"^7.0.0",
+        "qb":"^10.0.2",
+        "hyper":"^8.0.0"
+    },
+    "devDependencies":{
+        "testbox":"*"
+    },
+    "installPaths":{
+        "coldbox":"coldbox/",
+        "testbox":"testbox/",
+        "qb":"modules/qb/",
+        "hyper":"modules/hyper/"
+    },
+    "testbox":{
+        "runner":"http://localhost:60299/tests/runner.cfm"
+    }
+}
