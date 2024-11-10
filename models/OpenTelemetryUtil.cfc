@@ -23,14 +23,14 @@ component singleton {
 		spanId            = ""
 	){
 		param arguments.seed = UUIDGenerator.randomUUID().toString();
-		var traceId          = len( traceId ) ? traceId : createTraceId( arguments.seed );
-		var parentId         = len( parentId ) ? parentId : createSpanId( arguments.seed );
+		arguments.traceId          = len( traceId ) ? traceId : createTraceId( arguments.seed );
+		arguments.parentId         = len( parentId ) ? parentId : createSpanId( arguments.seed );
 		var traceFlags       = getTraceFlags( arguments.isSampled );
 
 		var traceParent = [
 			variables.traceVersion,
-			traceId,
-			parentID,
+			arguments.traceId,
+			arguments.parentId,
 			traceFlags
 		];
 
