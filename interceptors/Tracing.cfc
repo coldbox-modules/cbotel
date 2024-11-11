@@ -25,7 +25,9 @@ component {
 			traceParent = "";
 		}
 
-		var transactionId = OpenTelemetryUtil.newUUID() & serializeJSON( getHTTPRequestData( false ) );
+		var transactionId = OpenTelemetryUtil.createSpanId(
+			OpenTelemetryUtil.newUUID() & serializeJSON( getHTTPRequestData( false ) )
+		);
 
 		if ( !len( traceParent ) && moduleSettings.autoAddTraceParent ) {
 			var isSampled = event.getHttpHeader( "X-B3-Sampled", "0" );
