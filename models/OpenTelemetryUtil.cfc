@@ -70,8 +70,12 @@ component singleton {
 	 */
 	function createSpanId( string seed ){
 		return server.keyExists( "lucee" )
-				? lCase( hash( arguments.seed, "QUICK" ) )
-				: mid( lCase( hash( arguments.seed, "SHA-1" ) ), 9, 16 );
+		 ? lCase( hash( arguments.seed, "QUICK" ) )
+		 : mid(
+			lCase( hash( arguments.seed, "SHA-1" ) ),
+			9,
+			16
+		);
 	}
 
 	/**
