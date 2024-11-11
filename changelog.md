@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2024-11-10
+### Fixed
+
+* Fix transaction identifier lenth and compatibility issue with 16 character algorithm with ACF
 
 ## [1.0.0] - 2024-11-10
 

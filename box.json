@@ -1,6 +1,6 @@
 {
     "name":"Coldbox Open Telementry Module",
-    "version":"1.0.2",
+    "version":"1.0.1",
     "location":"https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/cbotel/@build.version@/cbotel-@build.version@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "homepage":"https://github.com/coldbox-modules/cbotel",
