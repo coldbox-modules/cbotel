@@ -11,6 +11,7 @@ component singleton {
 		return UUIDGenerator.randomUUID().toString();
 	}
 
+
 	/**
 	 * Generate a new traceparent header according to the OpenTelemetry specification
 	 * https://www.w3.org/TR/trace-context/#traceparent-header
@@ -68,7 +69,13 @@ component singleton {
 	 * @seed The seed to create the parent id from
 	 */
 	function createSpanId( string seed ){
-		return lCase( hash( arguments.seed, "QUICK" ) );
+		return server.keyExists( "lucee" )
+		 ? lCase( hash( arguments.seed, "QUICK" ) )
+		 : mid(
+			lCase( hash( arguments.seed, "SHA-1" ) ),
+			9,
+			16
+		);
 	}
 
 	/**
