@@ -62,6 +62,8 @@ jobs:
 
       - name: Setup CommandBox CLI
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
+        with:
+          version: ${{ matrix.commandBoxVersion }}
 
       # Not Needed in this module
       #- name: Setup Environment For Testing Process
