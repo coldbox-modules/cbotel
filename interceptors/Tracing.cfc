@@ -1,14 +1,14 @@
 component {
 
 	property name="OpenTelemetryUtil" inject="OpenTelemetryUtil@cbotel";
-	property name="moduleSettings"    inject="coldbox:moduleSettings:cbotel";
+	property name="moduleSettings"    inject="box:moduleSettings:cbotel";
 
 	/**
 	 * Processes the inbound open telemetry information and sets it in the private request context
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function preProcess( event, rc, prc ){
 		var traceParent   = event.getHttpHeader( "traceparent", "" );
@@ -69,8 +69,8 @@ component {
 	 * Adds the traceparent and tracestate headers to the response
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function postProcess( event, rc, prc ){
 		if ( structKeyExists( prc, "openTelemetry" ) && structKeyExists( prc.openTelemetry, "traceParent" ) ) {
@@ -118,9 +118,9 @@ component {
 	/**
 	 * Appends the trace information to logstash entries
 	 *
-	 * @event        
-	 * @rc           
-	 * @prc          
+	 * @event
+	 * @rc
+	 * @prc
 	 * @interceptData
 	 */
 	function onLogstashEntryCreate( event, rc, prc, interceptData ){
