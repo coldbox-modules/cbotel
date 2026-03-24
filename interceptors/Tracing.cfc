@@ -7,8 +7,8 @@ component {
 	 * Processes the inbound open telemetry information and sets it in the private request context
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function preProcess( event, rc, prc ){
 		var traceParent   = event.getHttpHeader( "traceparent", "" );
@@ -42,20 +42,21 @@ component {
 				traceId   = traceId
 			);
 
+			// we need to make sure we javacast these or sometimes the values get picked up as scientific notation and result in infinity
 			prc[ "openTelemetry" ] = {
 				"traceParent"   : traceParent,
-				"parentId"      : listGetAt( traceParent, 3, "-" ),
-				"traceId"       : listGetAt( traceParent, 2, "-" ),
+				"parentId"      : javacast( "string", listGetAt( traceParent, 3, "-" ) ),
+				"traceId"       : javacast( "string", listGetAt( traceParent, 2, "-" ) ),
 				"traceState"    : traceStateObj,
-				"transactionId" : transactionId
+				"transactionId" : javacast( "string", transactionId )
 			};
 		} else if ( len( traceParent ) ) {
 			prc[ "openTelemetry" ] = {
 				"traceParent"   : traceParent,
-				"parentId"      : listGetAt( traceParent, 3, "-" ),
-				"traceId"       : listGetAt( traceParent, 2, "-" ),
+				"parentId"      : javacast( "string", listGetAt( traceParent, 3, "-" ) ),
+				"traceId"       : javacast( "string", listGetAt( traceParent, 2, "-" ) ),
 				"traceState"    : traceStateObj,
-				"transactionId" : transactionId
+				"transactionId" : javacast( "string", transactionId )
 			};
 		}
 
@@ -69,8 +70,8 @@ component {
 	 * Adds the traceparent and tracestate headers to the response
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function postProcess( event, rc, prc ){
 		if ( structKeyExists( prc, "openTelemetry" ) && structKeyExists( prc.openTelemetry, "traceParent" ) ) {
@@ -118,17 +119,17 @@ component {
 	/**
 	 * Appends the trace information to logstash entries
 	 *
-	 * @event        
-	 * @rc           
-	 * @prc          
+	 * @event
+	 * @rc
+	 * @prc
 	 * @interceptData
 	 */
 	function onLogstashEntryCreate( event, rc, prc, interceptData ){
 		if ( moduleSettings.logstashTraceEnabled && prc.keyExists( "openTelemetry" ) ) {
 			var entry                 = interceptData.entry;
-			entry[ "span.id" ]        = prc.openTelemetry.parentId;
-			entry[ "trace.id" ]       = prc.openTelemetry.traceId;
-			entry[ "transaction.id" ] = prc.openTelemetry.transactionId;
+			entry[ "span.id" ]        = javacast( "string", prc.openTelemetry.parentId );
+			entry[ "trace.id" ]       = javacast( "string", prc.openTelemetry.traceId );
+			entry[ "transaction.id" ] = javacast( "string", prc.openTelemetry.transactionId );
 		}
 	}
 
