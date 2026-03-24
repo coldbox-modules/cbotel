@@ -10,7 +10,7 @@
         "hyper":"^8.0.0"
     },
     "devDependencies":{
-        "testbox":"*"
+        "testbox":"be"
     },
     "installPaths":{
         "coldbox":"coldbox/",

@@ -21,19 +21,28 @@ jobs:
         cfengine: [ "lucee@5", "adobe@2018", "adobe@2021", "adobe@2023" ]
         coldboxVersion: [ "^6.0.0", "^7.0.0" ]
         experimental: [ false ]
+        commandBoxVersion: [ "6.1.0" ]
         # Here we tests all engines against ColdBox@BE
         include:
           - coldboxVersion: "be"
             cfengine: "lucee@5"
+            commandBoxVersion: "6.1.0"
             experimental: true
           - coldboxVersion: "be"
             cfengine: "lucee@6"
+            commandBoxVersion: "6.1.0"
             experimental: true
           - coldboxVersion: "be"
             cfengine: "adobe@2021"
+            commandBoxVersion: "6.1.0"
             experimental: true
           - coldboxVersion: "be"
             cfengine: "adobe@2023"
+            commandBoxVersion: "6.1.0"
+            experimental: true
+          - coldboxVersion: "be"
+            commandBoxVersion: "6.2.0-alpha"
+            cfengine: "boxlang@1"
             experimental: true
     steps:
       - name: Checkout Repository
@@ -53,6 +62,8 @@ jobs:
 
       - name: Setup CommandBox CLI
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
+        with:
+          version: ${{ matrix.commandBoxVersion }}
 
       # Not Needed in this module
       #- name: Setup Environment For Testing Process
